@@ -14,7 +14,7 @@
 
 The service initiating the request is usually a browser, or some sort of frontend that needs the data at this endpoint.
 
-As we've seen `GET` can also submit date, but this data is sent via query parameters.
+As we've seen `GET` can also submit data, but this data is sent via query parameters.
 
 ```
 GET 200 /handleData?firstName=Homer&password=doh_wtf
