@@ -4,8 +4,105 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 
+
 const PORT = process.env.PORT || 8000;
 
+const {stock, customers} = require('./data/promo')
+
+
+// const sizeChecker = (size) => {
+//     if (stock.shirt[size] < 1){
+//         res.send({
+//             status: 'error',
+//             error: '450'
+//         });
+//     }
+// }
+// order: 'socks',
+// size: 'undefined', small, medium, large, extra-large
+// givenName: 'fds',
+// surname: 'fdsfds',
+// email: {},
+// address: '3 sfds',
+// city: 'fsfes',
+// province: 'fsfds',
+// postcode: '5',
+// country: 'Canada'
+
+//order
+const handleOrder = (req, res) => {
+    // let {info} = req.body;
+    console.log(req.body);
+    let status = null;
+    let error = null;
+    let {order, size, givenName, surname, email, 
+        address, city, province, postcode, country} = req.body;
+
+    /// 000 check first
+
+    //check user
+    customers.forEach(client => {
+        if ((client.givenName === givenName && client.surname === surname) || (client.address === address)){
+            res.send({
+                status: 'error',
+                error: '550'
+            });
+        };
+        if (client.country !== country){
+            res.send({
+                status: 'error',
+                error: '650'
+            });
+        };
+    });
+    //check stock
+    switch (order) {
+        case 'socks':
+            if (stock.socks < 1){
+                res.send({
+                    status: 'error',
+                    error: '450'
+                });
+            }
+            break;
+        case 'bottle':
+            if (stock.bottle < 1){
+                res.send({
+                    status: 'error',
+                    error: '450'
+                });
+            }
+            break;
+        case 'shirt':
+            if (stock.shirt[size] < 1){
+                res.send({
+                    status: 'error',
+                    error: '450'
+                });
+            }
+            break;
+        case 'undefined':
+            res.send({
+                status: 'error',
+                error: '000'
+            });
+            break;
+    
+        default:
+            
+            break;
+    };
+
+    res.send({
+        status: 'success'
+    });
+}
+
+const handleConfirm = (req, res) => {
+    res.render('pages/confirmation');
+}
+
+//todo list
 let list = [];
 
 const handleToDo = (req, res) => {
@@ -37,10 +134,12 @@ express()
 
     // endpoints
 
-    .post('/data', handleAddItem)
+    .post('/order', handleOrder)
+    .get('/order-confirmed', handleConfirm)
 
     .get('/todo', handleToDo)
-
+    .post('/data', handleAddItem)
+    
     .get('/', (req, res) => res.send('Homepage?'))
 
     .get('*', (req, res) => res.send('Dang. 404.'))
