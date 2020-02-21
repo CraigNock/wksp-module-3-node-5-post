@@ -6,13 +6,22 @@ const morgan = require('morgan');
 
 const PORT = process.env.PORT || 8000;
 
+let list = [];
 
 const handleToDo = (req, res) => {
     res.render('pages/todo', {
-        title: 'To Do List'
+        title: 'To Do List',
+        list: list
     })
 };
 
+const handleAddItem = (req, res) => {
+    let item = req.body.item;
+    list.push(item);
+    console.log(list);
+
+    res.redirect('/todo');
+}
 
 express()
     .use(function(req, res, next) {
@@ -28,6 +37,7 @@ express()
 
     // endpoints
 
+    .post('/data', handleAddItem)
 
     .get('/todo', handleToDo)
 
