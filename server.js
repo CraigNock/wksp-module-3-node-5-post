@@ -9,15 +9,6 @@ const PORT = process.env.PORT || 8000;
 
 const {stock, customers} = require('./data/promo')
 
-
-// const sizeChecker = (size) => {
-//     if (stock.shirt[size] < 1){
-//         res.send({
-//             status: 'error',
-//             error: '450'
-//         });
-//     }
-// }
 // order: 'socks',
 // size: 'undefined', small, medium, large, extra-large
 // givenName: 'fds',
@@ -29,12 +20,15 @@ const {stock, customers} = require('./data/promo')
 // postcode: '5',
 // country: 'Canada'
 
+const updateData = () => {
+    return;
+}
+
 //order
 const handleOrder = (req, res) => {
     // let {info} = req.body;
     console.log(req.body);
-    let status = null;
-    let error = null;
+    
     let {order, size, givenName, surname, email, 
         address, city, province, postcode, country} = req.body;
 
@@ -92,6 +86,8 @@ const handleOrder = (req, res) => {
             
             break;
     };
+
+    updateData();
 
     res.send({
         status: 'success'
