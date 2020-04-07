@@ -53,9 +53,9 @@ const { stock, customers } = require('<PATH_TO_FILE>');
 The form communicates with the following endpoints:
 
 - `/order` (`POST` --> send the order details in an object.)
-- `/order-confirmation` (`GET` --> displays an order confirmation page.)
+- `/order-confirmed` (`GET` --> displays an order confirmation page.)
 
 ## Extra
 
-If you feel inclined, you could create a better order confirmation page. It would be cool for that page to render they're order information.
+If you feel inclined, you could create a better order confirmation page. It would be cool for that page to render their order information.
 

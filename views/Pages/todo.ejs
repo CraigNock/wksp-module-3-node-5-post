@@ -1,0 +1,17 @@
+<%- include('../partials/header', {}) %>
+
+<form action="/data" method="POST">
+    <label for="item">Add an item!</label><br>
+    <input type="text" id="item" name="item">
+    <button type="submit">Submit</button>
+</form>
+
+<ul>
+    <% list.forEach(item => { %>
+        <li><%- item %></li>
+    <% }) %> 
+</ul>
+
+
+
+<%- include('../partials/footer', {}) %>
